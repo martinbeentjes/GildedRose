@@ -7,7 +7,6 @@ public class ConjuredQualityControl implements QualityControl{
     public void updateQuality(Item item) {
         item.quality = Math.min(item.quality, MAX_DAYS);
 
-
         int degradationFactor = 1;
         if (item.sellIn <= 0) {
             degradationFactor = 2;
