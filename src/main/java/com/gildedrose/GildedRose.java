@@ -17,7 +17,6 @@ class GildedRose {
     private static final String SULFURAS_HAND_OF_RAGNAROS = "Sulfuras, Hand of Ragnaros";
     private static final String AGED_BRIE = "Aged Brie";
     private static final String CONJURED_ITEM = "Conjured item";
-    private static final String DEFAULT_ITEM = "Default item";
     Item[] items;
     private Map<String, QualityControl> qualityControllers;
     private SellInControl sellInControl;
@@ -43,10 +42,7 @@ class GildedRose {
 
     private void updateQuality() {
         Arrays.stream(items).forEach(item -> {
-            QualityControl qualityControl = qualityControllers.get(item.name);
-            if (qualityControl == null) {
-                qualityControl = qualityControllers.get(DEFAULT_ITEM);
-            }
+            QualityControl qualityControl = qualityControllers.getOrDefault(item.name, new DefaultQualityControl());
             qualityControl.updateQuality(item);
         });
     }
@@ -57,6 +53,5 @@ class GildedRose {
         qualityControllers.put(SULFURAS_HAND_OF_RAGNAROS, new SulfurasQualityControl());
         qualityControllers.put(AGED_BRIE, new AgedBrieQualityControl());
         qualityControllers.put(CONJURED_ITEM, new ConjuredQualityControl());
-        qualityControllers.put(DEFAULT_ITEM, new DefaultQualityControl());
     }
 }
